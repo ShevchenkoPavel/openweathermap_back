@@ -17,20 +17,13 @@ const defaultApiKey = 'c20f298588437c47ed907acbd44119da';
 const defaultTown = 'Omsk';
 const defaultUnits = 'metric'; // imperial
 
-app.get('/route', function(req, res) {
-  console.log('test route')
-  res.send('testRoute')
-})
-
 app.get('/getWeather', function(req, res) {
-
   const helper = new openweatherHelper(
     {
         APPID: defaultApiKey,
         units: req.query.units || defaultUnits
     }
   );
-
   helper.getCurrentWeatherByCityName((req.query.town || defaultTown), (err, currentWeather) => {
     if(err){
         console.log(err);
@@ -40,14 +33,11 @@ app.get('/getWeather', function(req, res) {
       res.send(JSON.parse(JSON.stringify(currentWeather)))
     }
   });
-
 })
 
 app.get('/getWeatherRu', function(req, res) {
   let cityName = req.query.city || defaultTown;
   let units = req.query.units || defaultUnits;
-  console.log('rq', req.query);
-  console.log('unitss', units);
 
   function sendResponse(err, data, callback){
   	let error = null;
@@ -64,7 +54,6 @@ app.get('/getWeatherRu', function(req, res) {
   			response = JSON.parse(data.body);
   		}
   	}
-
   	callback(error, response);
   }
 
